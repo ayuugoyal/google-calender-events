@@ -14,7 +14,7 @@ import {
 import { useToast } from "@/hooks/use-toast"
 import * as React from "react"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -40,6 +40,7 @@ export default function CalendarEvents() {
   const [events, setEvents] = useState<CalendarEvent[]>([])
   const [filteredEvents, setFilteredEvents] = useState<CalendarEvent[]>([])
   const [date, setDate] = useState<Date | undefined>(new Date())
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (session?.accessToken) {
@@ -82,6 +83,7 @@ export default function CalendarEvents() {
     const data = await response.json()
     setEvents(data.items)
     setFilteredEvents(data.items)
+    setLoading(false)
   }
 
   return (
@@ -110,33 +112,39 @@ export default function CalendarEvents() {
           </PopoverContent>
         </Popover>
       </div>
-      <Table>
-        <TableCaption>Your upcoming events</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Event</TableHead>
-            <TableHead>Start Time (MM/DD/YYYY)</TableHead>
-            <TableHead>End Time (MM/DD/YYYY)</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredEvents.length == 0 ?
-            events.map((event) => (
-              <TableRow key={event.id}>
-                <TableCell className="font-medium">{event.summary}</TableCell>
-                <TableCell>{new Date(event.start.dateTime || event.start.date || "No Date").toLocaleString()}</TableCell>
-                <TableCell>{new Date(event.end.dateTime || event.end.date || "No Date").toLocaleString()}</TableCell>
+      {
+        loading ?
+          <div className="flex justify-center items-center w-full h-96">
+            <Loader2 className="animate-spin" size={100} />
+          </div>
+          :
+          <Table>
+            <TableCaption>{events.length == 0 ? "No Events in your account" : "Your upcoming events"}</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Event</TableHead>
+                <TableHead>Start Time (MM/DD/YYYY)</TableHead>
+                <TableHead>End Time (MM/DD/YYYY)</TableHead>
               </TableRow>
-            )) :
-            filteredEvents.map((event) => (
-              <TableRow key={event.id}>
-                <TableCell className="font-medium">{event.summary}</TableCell>
-                <TableCell>{new Date(event.start.dateTime || event.start.date || "No Date").toLocaleString()}</TableCell>
-                <TableCell>{new Date(event.end.dateTime || event.end.date || "No Date").toLocaleString()}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+            </TableHeader>
+            <TableBody>
+              {filteredEvents.length == 0 ?
+                events.map((event) => (
+                  <TableRow key={event.id}>
+                    <TableCell className="font-medium">{event.summary}</TableCell>
+                    <TableCell>{new Date(event.start.dateTime || event.start.date || "No Date").toLocaleString()}</TableCell>
+                    <TableCell>{new Date(event.end.dateTime || event.end.date || "No Date").toLocaleString()}</TableCell>
+                  </TableRow>
+                )) :
+                filteredEvents.map((event) => (
+                  <TableRow key={event.id}>
+                    <TableCell className="font-medium">{event.summary}</TableCell>
+                    <TableCell>{new Date(event.start.dateTime || event.start.date || "No Date").toLocaleString()}</TableCell>
+                    <TableCell>{new Date(event.end.dateTime || event.end.date || "No Date").toLocaleString()}</TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>}
     </div>
   )
 }
