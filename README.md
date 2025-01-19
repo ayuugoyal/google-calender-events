@@ -19,11 +19,17 @@ A modern web application built with Next.js that allows users to view and filter
 ## Getting Started
 
 1. Clone the repository:
-   git clone https://github.com/yourusername/google-calendar-events.git
-   cd google-calendar-events
+
+```bash
+ git clone https://github.com/ayuugoyal/google-calender-events.git
+ cd google-calendar-events
+```
 
 2. Install dependencies:
-   npm install
+
+```bash
+pnpm install
+```
 
 3. Set up your Google OAuth credentials:
 
@@ -37,50 +43,35 @@ A modern web application built with Next.js that allows users to view and filter
      - For production: https://your-domain.com/api/auth/callback/google
 
 4. Create a `.env.local` file in the root directory:
-   GOOGLE_CLIENT_ID=your_client_id_here
-   GOOGLE_CLIENT_SECRET=your_client_secret_here
-   NEXTAUTH_SECRET=your_nextauth_secret_here
-   NEXTAUTH_URL=http://localhost:3000
+
+```bash
+ GOOGLE_CLIENT_ID=your_client_id_here
+ GOOGLE_CLIENT_SECRET=your_client_secret_here
+ NEXTAUTH_SECRET=your_nextauth_secret_here
+ NEXTAUTH_URL=http://localhost:3000
+```
 
 5. Run the development server:
-   npm run dev
+
+```bash
+   pnpm run dev
+```
 
 6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Deployment
 
-### Deploying to Vercel
-
-1. Push your code to a GitHub repository
-
-2. Import your project to Vercel:
-
-   - Go to [Vercel](https://vercel.com)
-   - Click "New Project"
-   - Select your repository
-   - Click "Import"
-
-3. Configure environment variables in Vercel:
-
-   - Add all required environment variables
-   - Update NEXTAUTH_URL to your production URL
-   - Update Google OAuth credentials with production URLs
-
-4. Deploy the application:
-   - Vercel will automatically build and deploy your application
-   - Your application will be available at your Vercel URL
-
-### Post-Deployment Setup
-
 1. Add your production domain to Google OAuth credentials:
 
-   - Go back to Google Cloud Console
-   - Add your production domain to authorized JavaScript origins
-   - Add your production OAuth callback URL
+- Go back to Google Cloud Console
+- Add your production domain to authorized JavaScript origins
+- Add your production OAuth callback URL
 
 2. Configure test users:
-   - In Google Cloud Console, go to OAuth consent screen
-   - Add test users' email addresses
+
+- In Google Cloud Console, go to OAuth consent screen
+- Add test users' email addresses
+- I have add 4 test users including yours
 
 ### Key Components
 
